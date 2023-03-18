@@ -6,3 +6,5 @@ from PythonLinearNonlinearControl.envs.two_wheeled \
     import TwoWheeledConstEnv  # NOQA
 from PythonLinearNonlinearControl.envs.two_wheeled \
     import TwoWheeledTrackEnv  # NOQA
+from PythonLinearNonlinearControl.envs.ext_dubins \
+    import DubinsTrackEnv

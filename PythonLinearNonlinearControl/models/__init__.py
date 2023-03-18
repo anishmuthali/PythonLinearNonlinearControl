@@ -4,3 +4,5 @@ from PythonLinearNonlinearControl.models.first_order_lag \
     import FirstOrderLagModel  # NOQA
 from PythonLinearNonlinearControl.models.two_wheeled \
     import TwoWheeledModel  # NOQA
+from PythonLinearNonlinearControl.models.ext_dubins \
+    import ExtDubinsModel
