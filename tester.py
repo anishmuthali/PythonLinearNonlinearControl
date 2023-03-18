@@ -25,7 +25,7 @@ def run_tracker(reference_xtraj, x0, plot=True, bad_plan=None):
     Sf = np.diag([1e2, 1e2, 0, 0.01])
 
     config = configs.TwoWheeledConfigModule(R, Q, Sf)
-    env = envs.DubinsTrackEnv(reference_xtraj, x0, u1_bds=u1_bds, u2_bds=u2_bds)
+    env = envs.DubinsTrackEnv(reference_xtraj[1:,:], x0, u1_bds=u1_bds, u2_bds=u2_bds)
     model = models.ExtDubinsModel(config)
     controller = controllers.iLQR(config, model)
     planner = planners.ClosestPointPlanner(config)
