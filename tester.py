@@ -22,9 +22,9 @@ def run_tracker(reference_xtraj, x0, plot=True, bad_plan=None):
 
     R = np.diag([0.01, 0.01])
     Q = np.diag([1e1, 1e1, 0, 0.01])
-    Sf = np.diag([1e2, 1e2, 0, 0.01])
+    Sf = np.diag([1e3, 1e3, 0, 0.1])
 
-    config = configs.TwoWheeledConfigModule(R, Q, Sf)
+    config = configs.TwoWheeledConfigModule(R, Q, Sf, reference_xtraj.shape[0]-2)
     env = envs.DubinsTrackEnv(reference_xtraj[1:,:], x0, u1_bds=u1_bds, u2_bds=u2_bds)
     model = models.ExtDubinsModel(config)
     controller = controllers.iLQR(config, model)
@@ -34,7 +34,7 @@ def run_tracker(reference_xtraj, x0, plot=True, bad_plan=None):
     history_x, history_u, history_g = runner.run(env, controller, planner)
     if plot:
         assert bad_plan is not None, 'need the HJ plan to plot'
-        env.plot_traj(bad_plan)
+        env.plot_traj(bad_plan, history_u)
     
     return history_x, history_u
 

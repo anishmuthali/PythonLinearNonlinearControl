@@ -39,12 +39,13 @@ class TwoWheeledConfigModule():
     CAR_SIZE = 0.2
     WHEELE_SIZE = (0.075, 0.015)
 
-    def __init__(self, R, Q, Sf):
+    def __init__(self, R, Q, Sf, pred_len):
         """ 
         """
         TwoWheeledConfigModule.R = R
         TwoWheeledConfigModule.Q = Q
         TwoWheeledConfigModule.Sf = Sf
+        TwoWheeledConfigModule.PRED_LEN = pred_len
         # opt configs
         self.opt_config = {
             "Random": {

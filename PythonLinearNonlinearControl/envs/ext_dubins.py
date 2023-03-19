@@ -45,7 +45,7 @@ class DubinsTrackEnv(Env):
         self.config = {"state_size": 4,
                        "input_size": 2,
                        "dt": 0.1,
-                       "max_step": reference_traj.shape[0],
+                       "max_step": reference_traj.shape[0]-1,
                        "input_lower_bound": (u1_bds[0], u2_bds[0]),
                        "input_upper_bound": (u1_bds[1], u2_bds[1]),
                        "car_size": 0.2,
@@ -114,16 +114,24 @@ class DubinsTrackEnv(Env):
             self.step_count > self.config["max_step"], \
             {"goal_state": self.g_traj}
 
-    def plot_traj(self, bad_plan):
+    def plot_traj(self, bad_plan, history_u):
         bad_history = [self.x0]
+        good_history = [self.x0]
         for i in range(bad_plan.shape[0]):
             curr_u = bad_plan[i,:]
             next_x = step_dubins(bad_history[-1], curr_u, 0.1)
             bad_history.append(next_x)
+        for i in range(history_u.shape[0]):
+            curr_u = np.clip(history_u[i,:],
+                            self.config["input_lower_bound"],
+                            self.config["input_upper_bound"])
+            next_x = step_dubins(good_history[-1], curr_u, 0.1)
+            good_history.append(next_x)
         plt.plot(self.g_traj[:,0], self.g_traj[:,1], color='blue', label='HJ xtraj')
         hist_np = np.array(self.history_x).reshape(len(self.history_x), 4)
         bad_hist_np = np.array(bad_history).reshape(len(bad_history), 4)
+        good_hist_np = np.array(good_history).reshape(len(good_history), 4)
         plt.plot(bad_hist_np[:,0], bad_hist_np[:,1], color='red', label='real HJ trajectory')
-        plt.plot(hist_np[:,0], hist_np[:,1], color='green', label='iLQR trajectory')
+        plt.plot(good_hist_np[:,0], good_hist_np[:,1], color='green', label='iLQR trajectory')
         plt.legend(loc="best")
         plt.show()
