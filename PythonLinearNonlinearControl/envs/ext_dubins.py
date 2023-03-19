@@ -45,7 +45,7 @@ class DubinsTrackEnv(Env):
         self.config = {"state_size": 4,
                        "input_size": 2,
                        "dt": 0.1,
-                       "max_step": reference_traj.shape[0]-2,
+                       "max_step": reference_traj.shape[0],
                        "input_lower_bound": (u1_bds[0], u2_bds[0]),
                        "input_upper_bound": (u1_bds[1], u2_bds[1]),
                        "car_size": 0.2,

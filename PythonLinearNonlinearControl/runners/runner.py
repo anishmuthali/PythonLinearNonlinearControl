@@ -47,6 +47,7 @@ class ExpRunner():
             curr_x = next_x
             score += cost
             step_count += 1
+        history_x.append(curr_x)
 
         logger.debug("Controller type = {}, Score = {}"
                      .format(controller, score))

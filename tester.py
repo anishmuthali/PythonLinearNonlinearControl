@@ -39,4 +39,5 @@ def run_tracker(reference_xtraj, x0, plot=True, bad_plan=None):
     return history_x, history_u
 
 xtraj, utraj = run_tracker(reference_xtraj, x0, bad_plan=bad_plan)
-print(utraj)
+print(len(utraj))
+print(len(xtraj))
